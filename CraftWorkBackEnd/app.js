@@ -26,6 +26,8 @@ mongoose
 
 const app = express();
 
+app.set('trust proxy', 1)
+
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -38,9 +40,9 @@ app
   saveUninitialed: true,
   resave: true,
   cookie: {
-    sameSite: true,
-    secure: false,
-    httpOnly: true,
+    sameSite: 'none', // true,
+    secure: true, // false,
+    httpOnly: false, // true,
     maxAge: 60000
   },
   rolling: true
