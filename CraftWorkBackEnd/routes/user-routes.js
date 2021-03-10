@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('../models/user-model');
 const fileUpload = require('../configs/cloudinary');
 
-router.delete('/user/:id', (req, res) => {
+router.delete('/users/:id', (req, res) => {
   User
     .findByIdAndRemove(req.params.id)
     .then(() => {
@@ -15,7 +15,7 @@ router.delete('/user/:id', (req, res) => {
     });
 });
 
-router.get('/user/:id', (req, res) => {
+router.get('/users/:id', (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json('Specified id is not valid');
     return;
@@ -30,7 +30,7 @@ router.get('/user/:id', (req, res) => {
     });
 });
 
-router.put('/user/:id', (req, res) => {
+router.put('/users/:id', (req, res) => {
   const userWithNewData = req.body;
 
   User

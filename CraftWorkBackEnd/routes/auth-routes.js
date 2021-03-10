@@ -5,6 +5,7 @@ const User = require('../models/user-model');
 const passport = require('passport');
 
 
+
 router.post('/signup', (req, res) => {
   const { username, password } = req.body;
   //Server side validation on empty fields
@@ -31,7 +32,9 @@ router.post('/signup', (req, res) => {
       const hashPassword = bcrypt.hashSync(password, salt);
       User.create({
         username,
-        password: hashPassword
+        password: hashPassword,
+        credits: 100,
+        Shop: null
       }).then((response) => {
         res.status(200).json(response)
       }).catch((error) => {
@@ -103,5 +106,7 @@ router.get(
     failureRedirect: `${process.env.CLIENT_HOSTNAME}/login`
   })
 );
+
+
 
 module.exports = router;

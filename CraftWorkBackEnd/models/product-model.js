@@ -5,8 +5,12 @@ const productSchema = new Schema({
     name: String,
     price: Number,
     minimumOrder: Number,
-    imgUrl: String,
-    description: String
+    imageUrl: String,
+    description: String,
+    ownedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Shop'
+    }
 });
 
 const Product = mongoose.model('Product', productSchema);

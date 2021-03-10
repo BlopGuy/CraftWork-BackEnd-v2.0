@@ -42,13 +42,37 @@ router.get('/products/:id', (req, res) => {
     });
 });
 
-router.put('/product/:id', (req, res) => {
+router.put('/products/:id', (req, res) => {
   const productWithNewData = req.body;
 
   Product
     .findByIdAndUpdate(req.params.id, productWithNewData)
     .then(() => {
       res.status(200).json(`Product with id ${req.params.id} was updated`);
+    })
+    .catch((error) => {
+      res.status(500).json(`Error ocurred ${error}`);
+    });
+});
+
+router.post('/products', (req, res) => {
+  const { name, price, imageUrl, minimumOrder, description } = req.body;
+  console.log(req.body)
+
+  if (!name || !imageUrl || !minimumOrder || !description || !price) {
+    res.status(400).json('Missing fields');
+    return;
+  }
+  Product
+    .create({
+      name,
+      price,
+      imageUrl,
+      minimumOrder,
+      description
+    })
+    .then((response) => {
+      res.status(200).json(response);
     })
     .catch((error) => {
       res.status(500).json(`Error ocurred ${error}`);
@@ -64,5 +88,6 @@ router.post('/upload', fileUpload.single('file'), (req, res) => {
   };
 
 });
+
 
 module.exports = router;
